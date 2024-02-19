@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Management System</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #faf9f8;
+    }
+
+    .contact-container {
+      text-align: center;
+    }
+
+    table {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container contact-container">
+  <h1 class="mb-4">Contact Management System</h1>
+  <form id="contactForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number:</label>
+      <input type="tel" class="form-control" id="phone" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address:</label>
+      <input type="email" class="form-control" id="email" required>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="addContact()">Add Contact</button>
+  </form>
+
+  <h2 class="mt-4">Contact List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone Number</th>
+        <th>Email Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="contactList"></tbody>
+  </table>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', displayContacts);
+
+  function addContact() {
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+
+    if (name && phone && email) {
+      const contact = { name, phone, email };
+      let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+      contacts.push(contact);
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+
+      displayContacts();
+      clearForm();
+    } else {
+      alert('Please fill in all fields.');
+    }
+  }
+
+  function displayContacts() {
+    const contactListElement = document.getElementById('contactList');
+    const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+
+    contactListElement.innerHTML = '';
+    contacts.forEach(contact => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${contact.name}</td>
+        <td>${contact.phone}</td>
+        <td>${contact.email}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editContact('${contact.name}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteContact('${contact.name}')">Delete</button>
+        </td>
+      `;
+      contactListElement.appendChild(row);
+    });
+  }
+
+  function editContact(name) {
+    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    const contact = contacts.find(c => c.name === name);
+
+    if (contact) {
+      document.getElementById('name').value = contact.name;
+      document.getElementById('phone').value = contact.phone;
+      document.getElementById('email').value = contact.email;
+
+      // Remove the existing contact
+      contacts = contacts.filter(c => c.name !== name);
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+
+      displayContacts();
+    }
+  }
+
+  function deleteContact(name) {
+    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contacts = contacts.filter(contact => contact.name !== name);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+
+    displayContacts();
+  }
+
+  function clearForm() {
+    document.getElementById('contactForm').reset();
+  }
+</script>
+
+<!--Application with Frontend GUI, Interactable-->
+
+</body>
+</html>

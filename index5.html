@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Clothing Website</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4eebd;
+    }
+
+    .scraping-container {
+      text-align: center;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container scraping-container">
+  <h1 class="mb-4">E-Commerce Clothing Website</h1>
+  <button class="btn btn-primary" onclick="scrapeWebsite()">Scrape Website</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  function scrapeWebsite() {
+    // Perform web scraping here (this is a simplified example)
+    // Replace this with your actual web scraping logic using XMLHttpRequest, Fetch API, or a library like Axios
+
+    // For demonstration purposes, let's assume we have fetched product data
+    const productData = [
+      { name: 'Garment 1',  price: '$19.99', rating: '4.5' },
+      { name: 'Garment 2',  price: '$29.99', rating: '4.0' },
+      { name: 'Garment 3',  price: '$14.99', rating: '3.8' },
+      { name: 'Garment 4',  price: '$39.99', rating: '4.5' },
+      { name: 'Garment 5',  price: '$30.99', rating: '4.0' },
+      { name: 'Garment 6',  price: '$14.99', rating: '3.8' },
+      { name: 'Garment 7',  price: '$39.99', rating: '4.5' },
+      { name: 'Garment 8',  price: '$30.99', rating: '4.0' },
+      { name: 'Garment 9',  price: '$14.99', rating: '3.8' },
+      { name: 'Garment 10', price: '$39.99', rating: '4.5' },
+      { name: 'Garment 11', price: '$30.99', rating: '4.0' },
+      { name: 'Garment 12', price: '$14.99', rating: '3.8' },
+      { name: 'Garment 13', price: '$39.99', rating: '4.5' },
+      { name: 'Garment 14', price: '$30.99', rating: '4.0' },
+      { name: 'Garment 15', price: '$14.99', rating: '3.8' },
+      { name: 'Garment 16', price: '$39.99', rating: '4.5' },
+      { name: 'Garment 17', price: '$30.99', rating: '4.0' },
+      { name: 'Garment 18', price: '$14.99', rating: '3.8' },
+      { name: 'Garment 19', price: '$39.99', rating: '4.5' },
+      { name: 'Garment 20', price: '$30.99', rating: '4.0' },
+    ];
+
+    // Display the scraped data
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = '<h3>Scraped Product Information:</h3>';
+    productData.forEach(product => {
+      resultElement.innerHTML += `
+        <p>Name: ${product.name}, Price: ${product.price}, Rating: ${product.rating}</p>
+      `;
+    });
+
+    // Save the data to a CSV file (this is a simplified example)
+    const csvContent = productData.map(product => Object.values(product).join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'scraped_data.csv';
+    a.textContent = 'Download CSV';
+    resultElement.appendChild(a);
+  }
+</script>
+
+<!--Application with Frontend GUI, Interactable-->
+
+</body>
+</html>

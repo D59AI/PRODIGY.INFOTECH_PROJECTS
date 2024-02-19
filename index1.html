@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Converter</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f8c6c6;
+    }
+
+    .converter-container {
+      text-align: center;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container converter-container">
+  <h1 class="mb-4">Temperature Converter</h1>
+  <p>Enter Temperature:</p>
+  <input type="number" id="temperatureInput" class="form-control mb-3" placeholder="Enter Temperature" required>
+  
+  <p>Choose Unit:</p>
+  <select id="unitSelect" class="form-control mb-3">
+    <option value="celsius">Celsius</option>
+    <option value="fahrenheit">Fahrenheit</option>
+    <option value="kelvin">Kelvin</option>
+  </select>
+
+  <button class="btn btn-primary" onclick="convertTemperature()">Convert</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  function convertTemperature() {
+    const temperatureInput = document.getElementById('temperatureInput');
+    const unitSelect = document.getElementById('unitSelect');
+    const resultElement = document.getElementById('result');
+
+    const temperature = parseFloat(temperatureInput.value);
+    const unit = unitSelect.value;
+
+    if (isNaN(temperature)) {
+      resultElement.innerHTML = 'Please enter a valid temperature.';
+      return;
+    }
+
+    let convertedCelsius, convertedFahrenheit, convertedKelvin;
+
+    switch (unit) {
+      case 'celsius':
+        convertedCelsius = temperature;
+        convertedFahrenheit = (temperature * 9/5) + 32;
+        convertedKelvin = temperature + 273.15;
+        break;
+      case 'fahrenheit':
+        convertedCelsius = (temperature - 32) * 5/9;
+        convertedFahrenheit = temperature;
+        convertedKelvin = (temperature - 32) * 5/9 + 273.15;
+        break;
+      case 'kelvin':
+        convertedCelsius = temperature - 273.15;
+        convertedFahrenheit = (temperature - 273.15) * 9/5 + 32;
+        convertedKelvin = temperature;
+        break;
+    }
+
+    resultElement.innerHTML = `
+      Converted Temperature:
+      <br>Celsius: ${convertedCelsius.toFixed(2)}°C
+      <br>Fahrenheit: ${convertedFahrenheit.toFixed(2)}°F
+      <br>Kelvin: ${convertedKelvin.toFixed(2)}K
+    `;
+  }
+</script>
+
+<!--Application with Frontend GUI, Interactable-->
+
+
+</body>
+</html>

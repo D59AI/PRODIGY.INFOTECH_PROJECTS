@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guessing Game</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #edc7f6;
+    }
+
+    .game-container {
+      text-align: center;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .attempts {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container game-container">
+  <h1 class="mb-4">Guessing Game</h1>
+  <p>Guess the number between 1 and 100:</p>
+  <input type="number" id="userGuess" class="form-control mb-3" min="1" max="100" placeholder="Enter your guess">
+  <button class="btn btn-primary" onclick="checkGuess()">Submit Guess</button>
+
+  <div class="result" id="result"></div>
+  <div class="attempts" id="attempts"></div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  const targetNumber = Math.floor(Math.random() * 100) + 1;
+  let attempts = 0;
+
+  function checkGuess() {
+    const userGuessInput = document.getElementById('userGuess');
+    const resultElement = document.getElementById('result');
+    const attemptsElement = document.getElementById('attempts');
+
+    const userGuess = parseInt(userGuessInput.value);
+
+    if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+      resultElement.innerHTML = 'Please enter a valid number between 1 and 100.';
+    } else {
+      attempts++;
+      if (userGuess === targetNumber) {
+        resultElement.innerHTML = `Congratulations! You guessed the correct number ${targetNumber}!`;
+        attemptsElement.innerHTML = `Number of attempts: ${attempts}`;
+        userGuessInput.setAttribute('disabled', 'disabled');
+      } else if (userGuess < targetNumber) {
+        resultElement.innerHTML = 'Too low! Try again.';
+      } else {
+        resultElement.innerHTML = 'Too high! Try again.';
+      }
+    }
+  }
+</script>
+
+<!--Application with Frontend GUI, Interactable-->
+
+</body>
+</html>
